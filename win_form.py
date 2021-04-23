@@ -19,8 +19,6 @@ class MainWindow(QWidget):
         self.buttonStart = QPushButton(self)
         self.buttonHelp = QPushButton(self)
 
-        self.textTilesWidth = QLabel(self)
-        self.textTilesHeight = QLabel(self)
         self.initUI()
 
     def initUI(self):
@@ -87,16 +85,13 @@ class Game(QWidget):
 
         self.main_window = main
 
-        self.free_play = False
-        self.game_state_win = True
-        self.game_state_lose = True
-        self.main_window_is_showed = False
-
         self.square_side = 100
         self.window_width = self.vogl_game.size * self.square_side
         self.window_height = self.vogl_game.size * self.square_side + 50
 
         self.buttonRestart = QPushButton(self)
+        # self.levelLabel = QLabel(self)
+        # self.textBoxLevel = QLineEdit(self)
 
         self.initGame()
 
@@ -105,22 +100,27 @@ class Game(QWidget):
         self.setWindowTitle('Вогл')
 
         self.buttonRestart.setText('Рестарт')
-        if self.theme == 1:
-            self.buttonRestart.setStyleSheet("background-color: #404040")
-        else:
-            self.buttonRestart.setStyleSheet("background-color: #E6E6FA")
         self.buttonRestart.move(100, self.window_height - 40)
         self.buttonRestart.resize(80, 40)
         self.buttonRestart.clicked.connect(self.restart)
 
-        # self.setWindowIcon(QIcon('items/logo.png'))
+        # self.levelLabel.setText("Уровень")
+        # self.buttonRestart.move(100, self.window_height - 40)
+        # self.buttonRestart.resize(120, 40)
+
         if self.theme == 1:
             self.setStyleSheet("background-color: #202020")
+            self.buttonRestart.setStyleSheet("background-color: #404040")
         else:
             self.setStyleSheet("background-color: #E6E6FA")
+            self.buttonRestart.setStyleSheet("background-color: #E6E6FA")
 
     def restart(self):
         self.vogl_game.restart()
+        self.update()
+
+    def set_level(self, level: int):
+        self.vogl_game.set_level(level)
         self.update()
 
     def paintEvent(self, e):

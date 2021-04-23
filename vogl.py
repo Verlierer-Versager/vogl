@@ -1,3 +1,4 @@
+import copy
 import math
 
 
@@ -19,7 +20,7 @@ class VoglGame:
     def __init__(self, level: int) -> None:
         if 0 < level < 11:
             self._level = self.load_level(level)
-            self._save = self._level.copy()
+            self._save = copy.deepcopy(self._level)
             self._current_point = None
 
     @staticmethod
@@ -48,8 +49,14 @@ class VoglGame:
         return self._save
 
     def restart(self):
-        self._level = self._save.copy()
+        self._level = copy.deepcopy(self._save)
         self._current_point = None
+
+    def set_level(self, level: int):
+        if 0 < level < 11:
+            self._level = self.load_level(level)
+            self._save = copy.deepcopy(self._level)
+            self._current_point = None
 
     def set_current_point(self, row: int, colm: int):
         # new_point = point(row, colm)
